@@ -69,11 +69,11 @@ setup(
         'Issue Tracker': 'https://https://github.com/pyropy/python-doc-comparsion/pyropy/python-doc-comparison/issues',
     },
     keywords=[
-        # eg: 'keyword1', 'keyword2', 'keyword3',
+        "document", "comparison"
     ],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     install_requires=[
-        # eg: 'aspectlib==1.1.1', 'six>=1.7',
+        "textract==1.6.3"
     ],
     extras_require={
         # eg:
