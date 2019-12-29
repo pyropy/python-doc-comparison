@@ -11,13 +11,13 @@ class Comparator:
     """
 
     def __init__(self, path: str) -> None:
-        self.doc = self.load_document(path)
-        self.doc_vector = CountVectorizer().vectorize(self.doc)
-        self.comp_docs = list()
-        self.vectorizer = TfidfVectorizer()
+        self._doc = self.load_document(path)
+        self._doc_vector = CountVectorizer().vectorize(self._doc)
+        self._comp_docs = list()
+        self._vectorizer = TfidfVectorizer()
 
     def add_document(self, path: str) -> None:
-        self.comp_docs.append(self.load_document(path))
+        self._comp_docs.append(self.load_document(path))
 
     def load_document(self, path: str) -> Document:
         """
@@ -54,7 +54,7 @@ class Comparator:
         if documents is None:
             documents = list()
 
-        documents.extend(self.comp_docs)
+        documents.extend(self._comp_docs)
         assert len(documents), "Please provide documents that " \
                                "you would like to compare your document to."
 
@@ -72,6 +72,6 @@ class Comparator:
 
         Returns: Float value representig difference between two documents.
         """
-        tfidf = self.vectorizer.vectorize(self.doc, [document])
-        return self.calculate_vector_angle(self.doc_vector, tfidf)
+        tfidf = self._vectorizer.vectorize(self._doc, [document])
+        return self.calculate_vector_angle(self._doc_vector, tfidf)
 
