@@ -40,7 +40,8 @@ class CountVectorizer:
         Returns: Counter with term: count items.
         """
         document = self.clean_document(document.content)
-        return Counter(document)
+        tokens = self.split_iter(document)
+        return Counter(tokens)
 
     def vectorize(self, document: Document) -> np.ndarray:
         """
@@ -75,7 +76,7 @@ class TfidfVectorizer(CountVectorizer):
 
         Returns: Inverse document frequency (float).
         """
-        return log(doc_num / term_doc_freq)
+        return 0 if not term_doc_freq else log(doc_num  / term_doc_freq)
 
     def count_term_doc_freq(self, term: str, document: Document) -> int:
         """
@@ -107,10 +108,9 @@ class TfidfVectorizer(CountVectorizer):
                 term_docs_frequencies[term] += 1 if self.count_term_doc_freq(term, comp_doc) else 0
 
         _tfidf = list()
-        for term in term_frequencies:
-            term_freq = term_frequencies.get(term, 0)
-            term_doc_freq = term_docs_frequencies.get(term, 1)
+        for term in term_frequencies.keys():
+            term_freq = term_frequencies.get(term)
+            term_doc_freq = term_docs_frequencies.get(term)
             inverse_term_freq = self.calculate_inverse_doc_freq(doc_number, term_doc_freq)
             _tfidf.append(self.calculate_tfidf(term_freq, inverse_term_freq))
-
         return np.array(_tfidf)
