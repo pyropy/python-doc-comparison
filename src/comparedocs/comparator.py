@@ -2,7 +2,7 @@ import numpy as np
 from typing import Dict, List
 
 from src.comparedocs.document import Document
-from src.comparedocs.vectorizer import TfidfVectorizer, CountVectorizer
+from src.comparedocs.vectorizers import TfidfVectorizer, CountVectorizer
 
 
 class Comparator:
@@ -38,11 +38,19 @@ class Comparator:
         return np.sqrt(vector.dot(vector))
 
     def calculate_vector_angle(self, vector_1: np.ndarray, vector_2: np.ndarray) -> float:
+        """
+        Calculates angle between two vectors.
+        """
         mag_vec_1 = self.calculate_vector_magnitude(vector_1)
         mag_vec_2 = self.calculate_vector_magnitude(vector_2)
         return vector_1.dot(vector_2) / mag_vec_1 / mag_vec_2
 
     def compare(self, documents: List[Document] = None) -> Dict[str, float]:
+        """
+        Compares selected document again given documents,
+        returns comparison results as dictionary of document names
+        and their percentage similarities.
+        """
         if documents is None:
             documents = list()
 
@@ -57,9 +65,12 @@ class Comparator:
 
     def _compare(self, document: Document) -> float:
         """
-        Compares selected document again given documents,
-        returns comparison results as dictionary of document names
-        and their percentage similarities.
+        Calculates TF-IDF for given given documents
+        and calculates difference (angle) between the two.
+        Args:
+            document: Loaded document for comparison.
+
+        Returns: Float value representig difference between two documents.
         """
         tfidf = self.vectorizer.vectorize(self.doc, [document])
         return self.calculate_vector_angle(self.doc_vector, tfidf)
