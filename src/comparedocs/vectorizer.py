@@ -11,7 +11,7 @@ from .document import Document
 class CountVectorizer:
 
     @staticmethod
-    def split_iter(document):
+    def split_iter(document: str):
         return (x.group(0) for x in re.finditer(r"[A-Za-z0-9]+", document))
 
     def clean_document(self, document: str) -> str:
@@ -28,7 +28,7 @@ class CountVectorizer:
         document = self.clean_document(document.content)
         return Counter(document)
 
-    def vectorize(self, document):
+    def vectorize(self, document: Document) -> np.ndarray:
         return np.array(list(self.count_term_freq(document).values()))
 
 
@@ -43,7 +43,7 @@ class TfidfVectorizer(CountVectorizer):
     def count_term_doc_freq(self, term: str, document: Document) -> int:
         return self.count_term_freq(document).get(term, 0)
 
-    def vectorize(self, document: Document, comp_documents: List[Document]):
+    def vectorize(self, document: Document, comp_documents: List[Document]) -> np.ndarray:
         term_frequencies = self.count_term_freq(document)
         doc_number = len(comp_documents)
         term_docs_frequencies = dict()
