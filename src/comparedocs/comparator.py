@@ -43,7 +43,7 @@ class Comparator:
         """
         mag_vec_1 = self.calculate_vector_magnitude(vector_1)
         mag_vec_2 = self.calculate_vector_magnitude(vector_2)
-        return vector_1.dot(vector_2) / mag_vec_1 / mag_vec_2
+        return vector_1.dot(vector_2) / (mag_vec_1 * mag_vec_2)
 
     def compare(self, documents: List[Document] = None) -> Dict[str, float]:
         """

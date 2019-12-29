@@ -10,6 +10,6 @@ class Document:
         file = Path(path)
         assert file.exists(), "Path provided for document is not valid."
 
-        self.name = file.stem
+        self.name = file.name
         self.type = file.suffix
         self.content = textract.process(file).decode("utf-8")
