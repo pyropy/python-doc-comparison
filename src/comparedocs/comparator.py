@@ -1,8 +1,8 @@
 import numpy as np
 from typing import Dict, List
 
-from src.comparedocs.document import Document
-from src.comparedocs.vectorizers import TfidfVectorizer, CountVectorizer
+from .document import Document
+from .vectorizers import TfidfVectorizer, CountVectorizer
 
 
 class Comparator:
