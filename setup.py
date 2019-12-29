@@ -73,7 +73,8 @@ setup(
     ],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     install_requires=[
-        "textract==1.6.3"
+        "textract==1.6.3",
+        "numpy==1.18.0"
     ],
     extras_require={
         # eg:
