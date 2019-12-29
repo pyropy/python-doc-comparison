@@ -4,6 +4,7 @@ import numpy as np
 from math import log
 
 from typing import List
+from collections import Counter
 from .document import Document
 
 
@@ -25,13 +26,7 @@ class CountVectorizer:
 
     def count_term_freq(self, document: Document) -> dict:
         document = self.clean_document(document.content)
-        term_frequency = dict()
-        for word in self.split_iter(document):
-            if word in term_frequency:
-                term_frequency[word] += 1
-            else:
-                term_frequency[word] = 1
-        return term_frequency
+        return Counter(document)
 
     def vectorize(self, document):
         return np.array(list(self.count_term_freq(document).values()))
@@ -58,11 +53,11 @@ class TfidfVectorizer(CountVectorizer):
                     term_docs_frequencies[term] = 1
                 term_docs_frequencies[term] += 1 if self.count_term_doc_freq(term, comp_doc) else 0
 
-        tfidf = list()
+        _tfidf = list()
         for term in term_frequencies:
             term_freq = term_frequencies.get(term, 0)
             term_doc_freq = term_docs_frequencies.get(term, 1)
             inverse_term_freq = self.calculate_inverse_doc_freq(doc_number, term_doc_freq)
-            tfidf.append(self.calculate_tfidf(term_freq, inverse_term_freq))
+            _tfidf.append(self.calculate_tfidf(term_freq, inverse_term_freq))
 
-        return np.array(tfidf)
+        return np.array(_tfidf)
